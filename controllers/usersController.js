@@ -354,6 +354,9 @@ const uploadAvatar = async (req, res) => {
   }
 };
 
+
+
+
 const joinCommunity = async (req, res) => {
   const { communityId } = req.params;
   console.log(communityId, "communityid");
@@ -366,7 +369,7 @@ const joinCommunity = async (req, res) => {
     });
     await subreddit.updateOne(
       { _id: communityId },
-      { $set: { subscribers: userId } }
+      { $push: { subscribers: userId } }
     );
     res.status(200).json({
       status: "success",
@@ -389,6 +392,12 @@ const joinCommunity = async (req, res) => {
     });
   }
 };
+
+
+
+
+
+
 
 const editComment = async (req, res) => {
   try {
@@ -415,14 +424,27 @@ const deletePost = async (req, res) => {
   });
 };
 
-const viewPopular = async (req, res) => {
-  const userId = req.userId;
-  const popular = await users
-    .findOne({ _id: userId })
-    .populate("joined_communities");
 
-  // console.log(popular, "popular");
+
+const viewPopular = async (req, res) => {
+  try {
+    const userId = req.userId;
+    const user = await users.findOne({ _id: userId }).populate("joined_communities");
+    const joinedCommunitiesNames = user.joined_communities.map((community) => community.name);
+    const postsFromJoinedCommunities = await posts.find({ subreddit: { $in: joinedCommunitiesNames } });
+    res.status(200).json({
+    status:"success",
+    message:"successfully fetched popular posts",
+    data:postsFromJoinedCommunities
+      })
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+  }
 };
+
+
+
 
 const editProfile = async (req, res) => {
   const userId = req.userId;
@@ -434,6 +456,10 @@ const editProfile = async (req, res) => {
   });
 };
 
+
+
+
+
 // const searchCommunity=async(req,res)=>{
 // const {communityName}= req.params
 // const community=await subreddit.findOne({name:communityName})
@@ -444,6 +470,10 @@ const editProfile = async (req, res) => {
 // })
 // }
 
+
+
+
+
 const allCommunities = async (req, res) => {
   const communities = await subreddit.find();
   // console.log(communities, "all");
@@ -453,6 +483,11 @@ const allCommunities = async (req, res) => {
     data: communities,
   });
 };
+
+
+
+
+
 
 const reportPost = async (req, res) => {
   const { postId } = req.params;
@@ -465,6 +500,9 @@ const reportPost = async (req, res) => {
   });
 };
 
+
+
+
 const replyComment = async (req, res) => {
   const { commentId } = req.params;
   const { reply } = req.body;
@@ -474,6 +512,10 @@ const replyComment = async (req, res) => {
     message: "successfully replied to comment",
   });
 };
+
+
+
+
 
 const viewReply = async (req, res) => {
   const { postId } = req.params;
@@ -485,6 +527,12 @@ const viewReply = async (req, res) => {
     data: reply,
   });
 };
+
+
+
+
+
+
 
 const deleteProfile = async (req, res) => {
   const userId = req.userId;
@@ -499,6 +547,10 @@ const deleteProfile = async (req, res) => {
     message: "successfully deleted user account",
   });
 };
+
+
+
+
 
 
 
@@ -544,9 +596,6 @@ const userDownvoted = async (req, res) => {
     });
   }
 };
-
-
-
 
 
 

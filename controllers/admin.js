@@ -141,7 +141,7 @@ if(user.isBlocked){
 
 
 const reportedPost= async(req,res)=>{
-   const reported= await posts.find({reported_count:{ $gt: 0}})
+   const reported= await posts.find({reported_count:{ $gt: 1}})
    console.log(reported,"reported");
 res.status(200).json({
   status:"success",

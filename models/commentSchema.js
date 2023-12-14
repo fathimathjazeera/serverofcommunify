@@ -1,5 +1,3 @@
-
-
 const mongoose=require('mongoose')
 const commentSchema = new mongoose.Schema({
     text: String,
@@ -14,6 +12,24 @@ const commentSchema = new mongoose.Schema({
     
     },
     reply:[],
+    
+    votes: [
+        {
+            userId: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'users',
+            },
+            action: {
+                type: String,
+                enum: ['upvote', 'downvote'],
+                required: true,
+            },
+        },
+    ],
+
+        upvote:{type:Number,default:0},
+        downvote:{type:Number,default:0},
+        totalvote:{type:Number,default:0},
     createdAt: {
         type: Date,
         default: Date.now,
@@ -25,4 +41,3 @@ const commentSchema = new mongoose.Schema({
 
 
 module.exports = mongoose.model('comments', commentSchema);
-

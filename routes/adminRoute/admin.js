@@ -1,7 +1,7 @@
 const express=require('express')
 const adminRoute=express.Router()
-const adminController=require('../controllers/admin')
-const authentication= require('../middlewares/adminJwt')
+const adminController=require('../../controllers/adminController/admin')
+const authentication= require('../../middlewares/adminJwt')
 
 
 

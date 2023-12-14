@@ -1,10 +1,8 @@
 require('dotenv').config()
-const authSchema = require("./validation")
-const subreddits=require('../models/subReddit')
-const users=require('../models/userSchema')
-const jwt=require('jsonwebtoken')
-const posts=require('../models/postSchema')
-const comments= require('../models/commentSchema')
+const subreddits=require('../../models/subReddit')
+const users=require('../../models/userSchema')
+const posts=require('../../models/postSchema')
+const comments= require('../../models/commentSchema')
 
 
 const fetchAllUsers=async(req,res)=>{
@@ -58,7 +56,7 @@ const viewUserPost=async(req,res)=>{
     const userId=req.userId
    const {community}=req.body
 console.log(community,"community");
-await subreddit.create({
+await subreddits.create({
     name: community,
     userId:userId
 }) 
@@ -82,7 +80,6 @@ const viewCommunities=async(req,res)=>{
 
 const viewSpecificCommunity=async(req,res)=>{
     const {communityname}=req.params
-    console.log(communityname,"singlecommunity");
     const community=await subreddits.findOne({name:communityname})
     console.log(community,"community");
     res.status(200).json({
@@ -93,8 +90,8 @@ const viewSpecificCommunity=async(req,res)=>{
   }
 
 
+
   const viewCommunityPost=async(req,res)=>{
-    try{
       const {communityname}=req.params
       console.log(communityname,'communitypost');
       const post = await posts.find({subreddit:communityname})
@@ -104,15 +101,15 @@ const viewSpecificCommunity=async(req,res)=>{
       message:"successfully fetched",
       data:post
       })
-    }catch(err){
-      console.log(err.message,"error");
-    }
    }
+
+
+
+
 
 const blockUser=async(req,res)=>{
 const {userId}=req.params
 const user=await users.findOne({_id:userId})
-// console.log(user.isBlocked,"is");
 if(user.isBlocked){
  await users.updateOne({_id:userId},{$set:{isBlocked:false}})
  console.log(user,"unblocked");
@@ -131,14 +128,6 @@ if(user.isBlocked){
   })
 }
   }
-
-
-
-
-
-
-
-
 
 const reportedPost= async(req,res)=>{
    const reported= await posts.find({reported_count:{ $gt: 1}})

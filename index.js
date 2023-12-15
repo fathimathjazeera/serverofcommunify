@@ -3,11 +3,12 @@ require('dotenv').config();
 const express=require('express')
 const app=express()
 const mongoose=require('mongoose')
-const userRoute = require('./routes/user')
-const adminRoute = require('./routes/admin')
+const userRoute = require('./routes/userRoute/user')
+const adminRoute = require('./routes/adminRoute/admin')
+const commentRoute = require('./routes/commentRoute/comment')
+const communityRoute= require('./routes/communityRoute/community')
+const postRoute= require('./routes/postRoute/post')
 const cors=require('cors')
-
-
 
 
 
@@ -20,7 +21,8 @@ mongoose.connect('mongodb+srv://jezi:jezidb@communify.vxi1gld.mongodb.net/?retry
 })
 
 
-app.use('/api',userRoute,adminRoute)
+app.use('/api',userRoute,adminRoute,commentRoute,communityRoute,postRoute)
+
 app.listen(5001,()=>{
     console.log('server running')
 }

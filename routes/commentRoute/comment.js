@@ -2,7 +2,7 @@ const express=require('express')
 const commentRoute=express.Router()
 const commentController=require('../../controllers/commentController/comment')
 const authentication=require('../../middlewares/jwt')
-const tryCatch=require('../middlewares/tryCatchMiddleware')
+const tryCatch=require('../../middlewares/tryCatchMiddleware')
 
 
 

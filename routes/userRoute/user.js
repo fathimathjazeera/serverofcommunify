@@ -2,7 +2,7 @@ const express=require('express')
 const userRoute=express.Router()
 const userController= require('../../controllers/userController/user')
 const authentication=require('../../middlewares/jwt')
-const tryCatch=require('../middlewares/tryCatchMiddleware')
+const tryCatch=require('../../middlewares/tryCatchMiddleware')
 
 
 

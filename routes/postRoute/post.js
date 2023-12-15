@@ -2,7 +2,8 @@ const express=require('express')
 const postRoute=express.Router()
 const postController=require('../../controllers/postController/post')
 const authentication=require('../../middlewares/jwt')
-const tryCatch=require('../middlewares/tryCatchMiddleware')
+const tryCatch=require('../../middlewares/tryCatchMiddleware')
+
 
 
 

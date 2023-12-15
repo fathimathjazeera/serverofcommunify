@@ -19,3 +19,4 @@ postRoute.post('/users/downvote/:id',authentication,tryCatch(postController.down
 
 
 
+module.exports=postRoute

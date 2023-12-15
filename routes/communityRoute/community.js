@@ -13,3 +13,7 @@ communityRoute.get('/users/singlecommunity/:id',tryCatch(communityController.vie
 communityRoute.get('/users/communitypost/:communityname', tryCatch( communityController.viewCommunityPost))
 communityRoute.put('/users/joincommunity/:communityId',authentication,tryCatch(communityController.joinCommunity))
 communityRoute.get('/users/allcommunities',authentication,tryCatch( communityController.allCommunities))
+
+
+
+module.exports=communityRoute

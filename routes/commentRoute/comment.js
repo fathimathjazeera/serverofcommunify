@@ -15,3 +15,6 @@ commentRoute.put('/users/replycomment/:commentId',authentication,tryCatch( comme
 commentRoute.get('/users/viewreply/:postId',tryCatch(commentController.viewReply))
 commentRoute.post('/users/votecomment/commentId',tryCatch(commentController.voteComment))
 
+
+
+module.exports=commentRoute

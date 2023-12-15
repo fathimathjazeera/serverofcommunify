@@ -10,9 +10,6 @@ const postRoute= require('./routes/postRoute/post')
 const cors=require('cors')
 
 
-
-
-
 app.use(express.json())
 app.use(cors())
 mongoose.connect('mongodb+srv://jezi:jezidb@communify.vxi1gld.mongodb.net/?retryWrites=true&w=majority').then(()=>{
@@ -26,6 +23,9 @@ app.listen(5001,()=>{
     console.log('server running')
 }
 )
+
+
+
 
 
 

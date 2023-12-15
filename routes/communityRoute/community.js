@@ -1,7 +1,7 @@
 const express=require('express')
 const communityRoute=express.Router()
 const communityController=require('../../controllers/communityController/community')
-const authentication=require('../middlewares/jwt')
+const authentication=require('../../middlewares/jwt')
 const tryCatch=require('../middlewares/tryCatchMiddleware')
 
 

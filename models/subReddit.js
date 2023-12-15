@@ -15,5 +15,6 @@ const subRedditSchema= new mongoose.Schema({
 
 
 
+
 module.exports=mongoose.model('subreddits',subRedditSchema)
 

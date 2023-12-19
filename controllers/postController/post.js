@@ -53,6 +53,7 @@ const createPost = async (req, res) => {
       const postsFromJoinedCommunities = await posts.find({
         subreddit: { $in: joinedCommunitiesNames },
       });
+      console.log(postsFromJoinedCommunities,"joinedd");
       res.status(200).json({
         status: "success",
         message: "successfully fetched popular posts",
@@ -60,6 +61,7 @@ const createPost = async (req, res) => {
       });
   };
 
+  
 // VIEW SINGLE POST
   const viewSpecificPost = async (req, res) => {
       const { id } = req.params;

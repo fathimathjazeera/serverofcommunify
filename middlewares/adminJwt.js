@@ -3,17 +3,15 @@ require('dotenv').config();
 module.exports=(req,res,next)=>{
     
 
-
-
-    
     try{
     let authHeader=req.headers.authorization
     if(authHeader==undefined){
         res.status(401).send({error:"no token provided"})
     }
     let token=authHeader.split(" ")[1]
+    console.log(token,"token from adminjwt");
    const verified= jwt.verify(token,process.env.ADMIN_SECRET_KEY,function(err,decoded){
-    console.log(decoded,"decoded");
+   
 if(err){
     console.log("JWT Verification Error:", err.message);
     res.send({error:"Autentication failed"})

@@ -9,13 +9,17 @@ module.exports=(req,res,next)=>{
         res.status(401).send({error:"no token provided"})
     }
     let token=authHeader.split(" ")[1]
-    console.log(token,"token from adminjwt");
+    console.log(token,"token from undefined");
    const verified= jwt.verify(token,process.env.ADMIN_SECRET_KEY,function(err,decoded){
    
 if(err){
     console.log("JWT Verification Error:", err.message);
     res.send({error:"Autentication failed"})
 }else{
+    const userId = decoded.id;
+    const username = decoded.username;
+    req.userId = userId;
+    req.username = username;
     next()
 }
     })

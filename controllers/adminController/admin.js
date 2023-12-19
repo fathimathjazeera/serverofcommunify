@@ -7,7 +7,6 @@ const comments= require('../../models/commentSchema')
 
 const fetchAllUsers=async(req,res)=>{
 const allUsers=await users.find()
-
 res.status(200).json({
     status:"success",
     message:"fetched all users",

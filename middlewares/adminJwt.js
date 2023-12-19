@@ -16,10 +16,6 @@ if(err){
     console.log("JWT Verification Error:", err.message);
     res.send({error:"Autentication failed"})
 }else{
-    const userId = decoded.id;
-    const username = decoded.username;
-    req.userId = userId;
-    req.username = username;
     next()
 }
     })

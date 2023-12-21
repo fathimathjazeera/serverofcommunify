@@ -17,6 +17,12 @@ adminRoute.get('/admin/specificcommunity/:communityname',adminController.viewSpe
 adminRoute.get('/admin/communitypost/:communityname',adminController.viewCommunityPost)
 adminRoute.put('/admin/blockuser/:userId',adminController.blockUser)
 adminRoute.get('/admin/reportedpost',adminController.reportedPost)
+adminRoute.get('/admin/paginateduser',adminController.paginatedUsers)
+
+
+
+
+
 
 
 

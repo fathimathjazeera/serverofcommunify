@@ -15,6 +15,40 @@ res.status(200).json({
 }
 
 
+
+const paginatedUsers= async(req,res)=>{
+  const allUsers=await users.find()
+  const page = parseInt(req.query.page)
+  const limit  =  parseInt(req.query.limit)
+  const startIndex = (page - 1) * limit
+  const lastIndex = (page) * limit
+  const results = {}
+  results.totalUser = allUsers.length
+  results.pageCount = Math.ceil(allUsers.length/limit)
+if(lastIndex < allUsers.length){
+  results.next = {
+    page:page + 1
+  }
+}
+if(startIndex > 0){
+  results.prev ={
+    page:page - 1
+  }
+}
+
+const result = allUsers.slice(startIndex, lastIndex)
+res.status(200).json({
+  status:"success",
+  message:"successfully fetched users",
+  data: result
+})
+
+}
+
+
+
+
+
 const specificUser=async(req,res)=>{
 const {id}=req.params
 const singleuser=await users.findById(id)
@@ -160,7 +194,8 @@ module.exports={
     viewSpecificCommunity,
     viewCommunityPost,
   blockUser,
-  reportedPost
+  reportedPost,
+  paginatedUsers
 }
 
 

@@ -9,6 +9,13 @@ const comments = require("../../models/commentSchema");
 const votes = require("../../models/votesSchema");
 
 
+
+
+
+
+
+
+
 // USER REGISTRATION
 const register = async (req, res) => {
   const { error, value } = authSchema.validate(req.body);
@@ -39,15 +46,15 @@ const register = async (req, res) => {
 
 
 
+
+
 // USER OR ADMIN LOGIN
 const login = async (req, res) => {
   const adminEmail = "admin@gmail.com";
   const { error, value } = authSchema.validate(req.body);
-
   if (!error) {
     const { email, password } = value;
     const registeredUser = await users.findOne({ email: email });
-
     if (email == adminEmail && password == process.env.ADMIN_PASSWORD) {
       let token = jwt.sign(adminEmail, process.env.ADMIN_SECRET_KEY);
       res.status(200).json({
@@ -71,7 +78,6 @@ const login = async (req, res) => {
               // karma:registeredUser.karma
             };
             let token = jwt.sign(resp, process.env.ACCESS_TOKEN_SECRET);
-
             res.status(200).json({
               auth: true,
               message: "successfully logged In",
@@ -96,6 +102,12 @@ const login = async (req, res) => {
 };
 
 
+
+
+
+
+
+
 // VIEW USER ACCOUNT
 const userProfile = async (req, res) => {
   const userId = req.userId;
@@ -108,6 +120,9 @@ const userProfile = async (req, res) => {
 };
 
 
+
+
+
 // VIEW USER POSTS
 const viewUserPost = async (req, res) => {
   const userId = req.userId;
@@ -118,6 +133,15 @@ const viewUserPost = async (req, res) => {
     data: post,
   });
 };
+
+
+
+
+
+
+
+
+
 
 
 // VIEW USER COMMENT

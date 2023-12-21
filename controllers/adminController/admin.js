@@ -36,11 +36,11 @@ if(startIndex > 0){
   }
 }
 
-const result = allUsers.slice(startIndex, lastIndex)
+results.result = allUsers.slice(startIndex, lastIndex)
 res.status(200).json({
   status:"success",
   message:"successfully fetched users",
-  data: result
+  data: results
 })
 
 }

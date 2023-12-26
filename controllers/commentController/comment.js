@@ -92,6 +92,7 @@ const postComment = async (req, res) => {
 
 // VOTING COMMENT
 const voteComment=async(req,res)=>{
+  console.log("voted")
 const {commentId} = req.params
 const {vote} = req.body
 const userId= req.userId
@@ -118,6 +119,11 @@ if(!downvotedComment){
   comments.updateOne({_id:commentId}, {$inc:{downvote:-1}})
 }
 }
+res.status(200).json({
+  status:"success",
+  message:"successfully voted",
+  
+})
 }
 
 

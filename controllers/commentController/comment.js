@@ -76,12 +76,12 @@ const viewReply = async (req, res) => {
 
 // VOTING COMMENT
 const voteComment = async (req, res) => {
-  console.log("voted");
+
   const { commentId } = req.params;
-  const { vote } = req.body;
-  console.log(vote ,"vote");
+  const { action } = req.body;
+  console.log(action ,"vote");
   const userId = req.userId;
-  if (vote == "upvote") {
+  if (action == "upvote") {
     const upvotedComment = await comments.findOne({
       _id: commentId,
       "votes.userId": userId,
@@ -103,7 +103,7 @@ const voteComment = async (req, res) => {
     } else {
       await comments.updateOne({ _id: commentId }, { $inc: { upvote: -1 } });
     }
-  } else if (vote == "downvote") {
+  } else if (action == "downvote") {
     const upvotedComment = await comments.findOne({
       _id: commentId,
       "votes.userId": userId,

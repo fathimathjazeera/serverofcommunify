@@ -79,6 +79,7 @@ const voteComment = async (req, res) => {
   console.log("voted");
   const { commentId } = req.params;
   const { vote } = req.body;
+  console.log(vote ,"vote");
   const userId = req.userId;
   if (vote == "upvote") {
     const upvotedComment = await comments.findOne({

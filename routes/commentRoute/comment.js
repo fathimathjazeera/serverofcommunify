@@ -13,7 +13,7 @@ commentRoute.put('/users/editcomment/:commentId',authentication,tryCatch(comment
 commentRoute.delete('/users/deletecomment/:id',tryCatch(commentController.deleteComment))
 commentRoute.put('/users/replycomment/:commentId',authentication,tryCatch( commentController.replyComment))
 commentRoute.get('/users/viewreply/:postId',tryCatch(commentController.viewReply))
-commentRoute.post('/users/votecomment/:commentId',tryCatch(commentController.voteComment))
+commentRoute.put('/users/votecomment/:commentId',tryCatch(commentController.voteComment))
 
 
 

@@ -103,7 +103,6 @@ if(!upvotedComment){
     await comments.updateOne({_id:commentId},{$inc:{downvote:-1}})
   }
   await comments.updateOne({_id:commentId},{$inc:{upvote:1}})
-
 }else{
   await comments.updateOne({_id:commentId},{$inc:{upvote:-1}})
 }
@@ -120,8 +119,6 @@ if(!downvotedComment){
 }
 }
 }
-
-
 
 
 

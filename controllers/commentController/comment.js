@@ -141,17 +141,8 @@ const voteComment = async (req, res) => {
       }});
     }
   } else if (action == "downvote") {
-    const upvotedComment = await comments.findOne({
-      _id: commentId,
-      "votes.userId": userId,
-      "votes.action": "upvote",
-    });
-    const downvotedComment = await comments.findOne({
-      _id: commentId,
-      "votes.userId": userId,
-      "votes.action": "downvote",
-    });
-
+    console.log("upvotedComment:", upvotedComment);
+    console.log("downvotedComment:", downvotedComment);
     if (!downvotedComment) {
       if (upvotedComment) {
         await comments.updateOne({ _id: commentId }, { $inc: { upvote: -1 } , $pull: {

@@ -94,6 +94,8 @@ const voteComment = async (req, res) => {
     "votes.userId": userId,
     "votes.action": "upvote",
   });
+
+
   const downvotedComment = await comments.findOne({
     _id: commentId,
     "votes.userId": userId,
@@ -101,6 +103,8 @@ const voteComment = async (req, res) => {
   });
 
   if (action == "upvote") {
+    console.log("upvotedComment:", upvotedComment);
+    console.log("downvotedComment:", downvotedComment);
     if (!upvotedComment) {
       if (downvotedComment) {
         await comments.updateOne(
@@ -175,6 +179,7 @@ const voteComment = async (req, res) => {
       }});
     }
   }
+
   res.status(200).json({
     status: "success",
     message: "successfully voted",

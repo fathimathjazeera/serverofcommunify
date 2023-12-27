@@ -172,7 +172,7 @@ const voteComment = async (req, res) => {
   }
   const comment = await comments.findById(commentId)
   const totalvote = Math.max(comment.upvote - comment.downvote , 0);
-  await comments.updateOne({ _id: commentId }, { $set: { totalvote } });
+  await comments.updateOne({ _id: commentId }, { $set: { totalvote:totalvote } });
   res.status(200).json({
     status: "success",
     message: "successfully voted",

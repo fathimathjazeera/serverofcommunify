@@ -125,7 +125,7 @@ const voteComment = async (req, res) => {
           $push: {
             votes: {
               userId: userId,
-              action: action,
+              action: "upvote",
             },
           },
         }

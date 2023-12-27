@@ -149,7 +149,7 @@ const voteComment = async (req, res) => {
       "votes.userId": userId,
       "votes.action": "downvote",
     });
-
+console.log(downvotedComment,"downvotecomment")
     if (!downvotedComment) {
       if (upvotedComment) {
         await comments.updateOne({ _id: commentId }, { $inc: { upvote: -1 } , $pull: {

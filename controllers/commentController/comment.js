@@ -132,7 +132,7 @@ const voteComment = async (req, res) => {
       await comments.updateOne({ _id: commentId }, { $inc: { upvote: -1 },  $pull: {
         votes: {
           userId: userId,
-          action: "downvote",
+          action: "upvote",
         },
       }});
     }
@@ -162,7 +162,7 @@ const voteComment = async (req, res) => {
         { $inc: { downvote: 1 },  $push: {
           votes: {
             userId: userId,
-            action: "upvote",
+            action: "downvote",
           },
         },}
       );

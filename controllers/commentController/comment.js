@@ -101,12 +101,21 @@ const voteComment = async (req, res) => {
     "votes.userId": userId,
     "votes.action": "downvote",
   });
+
   if (action == "upvote") {
     if (!upvotedComment) {
       if (downvotedComment) {
         await comments.updateOne(
           { _id: commentId },
-          { $inc: { downvote: -1 } }
+          { $inc: { downvote: -1 } ,
+          $pull: {
+            votes: {
+              userId: userId,
+              action: "downvote",
+            },
+          }
+        },
+         
         );
       }
       await comments.updateOne(
@@ -122,7 +131,12 @@ const voteComment = async (req, res) => {
         }
       );
     } else {
-      await comments.updateOne({ _id: commentId }, { $inc: { upvote: -1 } });
+      await comments.updateOne({ _id: commentId }, { $inc: { upvote: -1 },  $pull: {
+        votes: {
+          userId: userId,
+          action: "downvote",
+        },
+      }});
     }
   } else if (action == "downvote") {
     const upvotedComment = await comments.findOne({
@@ -135,11 +149,17 @@ const voteComment = async (req, res) => {
       "votes.userId": userId,
       "votes.action": "downvote",
     });
+
     if (!downvotedComment) {
       if (upvotedComment) {
-        await comments.updateOne({ _id: commentId }, { $inc: { upvote: -1 } });
+        await comments.updateOne({ _id: commentId }, { $inc: { upvote: -1 } , $pull: {
+          votes: {
+            userId: userId,
+            action: "upvote",
+          },
+        }});
       }
-      comments.updateOne(
+     await comments.updateOne(
         { _id: commentId },
         { $inc: { downvote: 1 }, "votes.action": "downvote" }
       );

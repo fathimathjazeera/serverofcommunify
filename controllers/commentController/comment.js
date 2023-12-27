@@ -164,7 +164,12 @@ const voteComment = async (req, res) => {
         { $inc: { downvote: 1 }, "votes.action": "downvote" }
       );
     } else {
-      comments.updateOne({ _id: commentId }, { $inc: { downvote: -1 } });
+      comments.updateOne({ _id: commentId }, { $inc: { downvote: -1 } , $pull: {
+        votes: {
+          userId: userId,
+          action: "downvote",
+        },
+      }});
     }
   }
   res.status(200).json({

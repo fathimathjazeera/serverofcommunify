@@ -74,9 +74,16 @@ const viewReply = async (req, res) => {
   });
 };
 
+
+
+
+
+
+
+
+
 // VOTING COMMENT
 const voteComment = async (req, res) => {
-
   const { commentId } = req.params;
   const { action } = req.body;
   console.log(action ,"vote");
@@ -97,12 +104,14 @@ const voteComment = async (req, res) => {
         await comments.updateOne(
           { _id: commentId },
           { $inc: { downvote: -1 } }
+
         );
       }
-      await comments.updateOne({ _id: commentId }, { $inc: { upvote: 1 } });
+      await comments.updateOne({ _id: commentId }, { $inc: { upvote: 1 } ,"votes.action":"upvote"});
     } else {
-      await comments.updateOne({ _id: commentId }, { $inc: { upvote: -1 } });
+      await comments.updateOne({ _id: commentId }, { $inc: { upvote: -1 }});
     }
+
   } else if (action == "downvote") {
     const upvotedComment = await comments.findOne({
       _id: commentId,
@@ -118,7 +127,7 @@ const voteComment = async (req, res) => {
       if (upvotedComment) {
         await comments.updateOne({ _id: commentId }, { $inc: { upvote: -1 } });
       }
-      comments.updateOne({ _id: commentId }, { $inc: { downvote: 1 } });
+      comments.updateOne({ _id: commentId }, { $inc: { downvote: 1 }, "votes.action":"downvote" });
     } else {
       comments.updateOne({ _id: commentId }, { $inc: { downvote: -1 } });
     }
@@ -128,6 +137,12 @@ const voteComment = async (req, res) => {
     message: "successfully voted",
   });
 };
+
+
+
+
+
+
 
 module.exports = {
   postComment,

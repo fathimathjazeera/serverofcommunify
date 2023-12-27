@@ -95,7 +95,6 @@ const voteComment = async (req, res) => {
     "votes.action": "upvote",
   });
 
-
   const downvotedComment = await comments.findOne({
     _id: commentId,
     "votes.userId": userId,
@@ -162,7 +161,7 @@ const voteComment = async (req, res) => {
         },}
       );
     } else {
-      comments.updateOne({ _id: commentId }, { $inc: { downvote: -1 } , $pull: {
+     await comments.updateOne({ _id: commentId }, { $inc: { downvote: -1 } , $pull: {
         votes: {
           userId: userId,
           action: "downvote",
@@ -181,11 +180,7 @@ const voteComment = async (req, res) => {
 
 
 
-
  
-
-
-
 
 
 
@@ -199,3 +194,9 @@ module.exports = {
   viewReply,
   voteComment,
 };
+
+
+
+
+
+

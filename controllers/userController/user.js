@@ -10,12 +10,6 @@ const votes = require("../../models/votesSchema");
 
 
 
-
-
-
-
-
-
 // USER REGISTRATION
 const register = async (req, res) => {
   const { error, value } = authSchema.validate(req.body);
@@ -104,10 +98,6 @@ const login = async (req, res) => {
 
 
 
-
-
-
-
 // VIEW USER ACCOUNT
 const userProfile = async (req, res) => {
   const userId = req.userId;
@@ -133,13 +123,6 @@ const viewUserPost = async (req, res) => {
     data: post,
   });
 };
-
-
-
-
-
-
-
 
 
 

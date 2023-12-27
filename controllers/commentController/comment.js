@@ -80,6 +80,9 @@ const viewReply = async (req, res) => {
 
 
 
+
+
+
 // VOTING COMMENT
 const voteComment = async (req, res) => {
   const { commentId } = req.params;
@@ -87,7 +90,6 @@ const voteComment = async (req, res) => {
   console.log(action, "vote");
   const userId = req.userId;
   console.log(userId, "userid");
-
   const upvotedComment = await comments.findOne({
     _id: commentId,
     "votes.userId": userId,
@@ -99,8 +101,6 @@ const voteComment = async (req, res) => {
     "votes.userId": userId,
     "votes.action": "downvote",
   });
-
-
   if (action == "upvote") {
     if (!upvotedComment) {
       if (downvotedComment) {
@@ -109,7 +109,6 @@ const voteComment = async (req, res) => {
           { $inc: { downvote: -1 } }
         );
       }
-
       await comments.updateOne(
         { _id: commentId },
         {
@@ -153,6 +152,17 @@ const voteComment = async (req, res) => {
     message: "successfully voted",
   });
 };
+
+
+
+
+
+
+
+
+
+
+
 
 module.exports = {
   postComment,

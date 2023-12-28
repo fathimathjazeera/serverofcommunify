@@ -1,6 +1,8 @@
 const mongoose=require('mongoose')
 
 
+
+
 const voteSchema=mongoose.Schema({
     postId: { 
         type: mongoose.Schema.Types.ObjectId,
@@ -16,8 +18,33 @@ const voteSchema=mongoose.Schema({
      required: true },
 totalvote:{type:Number}
 
-
 })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

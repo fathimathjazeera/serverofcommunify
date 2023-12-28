@@ -10,7 +10,7 @@ module.exports=(req,res,next)=>{
     let token=authHeader.split(" ")[1]
     console.log(token,"token from middleware");
    const verified= jwt.verify(token,process.env.ACCESS_TOKEN_SECRET,function(err,decoded){
-
+    
 if(err){
     console.log("JWT Verification Error:", err.message);
     res.send({error:"Autentication failed"})

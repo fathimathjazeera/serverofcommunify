@@ -100,9 +100,10 @@ const voteComment = async (req, res) => {
     "votes.action": "downvote",
   });
 
+
   if (action == "upvote") {
-    console.log("upvotedComment:", upvotedComment);
-    console.log("downvotedComment:", downvotedComment);
+    console.log( upvotedComment,"upvotedcomment from upvote");
+    console.log( downvotedComment,"downvotedcomment from downvote");
     if (!upvotedComment) {
       if (downvotedComment) {
         await comments.updateOne(
@@ -117,7 +118,6 @@ const voteComment = async (req, res) => {
         },
         );
       }
-
       await comments.updateOne(
         { _id: commentId },
         {
@@ -139,8 +139,8 @@ const voteComment = async (req, res) => {
       }});
     }
   } else if (action == "downvote") {
-    console.log("upvotedComment from downvote:", upvotedComment);
-    console.log("downvotedComment: from downvote", downvotedComment);
+    console.log( upvotedComment,"upvotedcomment from upvote");
+    console.log( downvotedComment,"downvotedcomment from downvote");
     if (!downvotedComment) {
       if (upvotedComment) {
         await comments.updateOne({ _id: commentId }, { $inc: { upvote: -1 } , $pull: {

@@ -103,7 +103,7 @@ const voteComment = async (req, res) => {
 
   if (action == "upvote") {
     console.log( upvotedComment,"upvotedcomment from upvote");
-    console.log( downvotedComment,"downvotedcomment from downvote");
+    console.log( downvotedComment,"downvotedcomment from upvote");
     if (!upvotedComment) {
       if (downvotedComment) {
         await comments.updateOne(
@@ -139,7 +139,7 @@ const voteComment = async (req, res) => {
       }});
     }
   } else if (action == "downvote") {
-    console.log( upvotedComment,"upvotedcomment from upvote");
+    console.log( upvotedComment,"upvotedcomment from from downvote");
     console.log( downvotedComment,"downvotedcomment from downvote");
     if (!downvotedComment) {
       if (upvotedComment) {

@@ -63,10 +63,6 @@ const replyComment = async (req, res) => {
   });
 };
 
-
-
-
-
 // VIEW REPLY
 const viewReply = async (req, res) => {
   const { postId } = req.params;
@@ -78,110 +74,128 @@ const viewReply = async (req, res) => {
   });
 };
 
-
-
-
-
-
 // VOTING COMMENT
 const voteComment = async (req, res) => {
   const { commentId } = req.params;
   const { action } = req.body;
   const userId = req.userId;
-  const comment = await comments.findById(commentId)
-  const upvoted = comment.votes.filter(
-    (vote) => vote.userId === userId && vote.action === action
-  );
-  const downvoted = comment.votes.filter(
-    (vote) => vote.userId === userId && vote.action === "downvote"
-  );
+  const comment = await comments.findById(commentId);
 
 
 
-if(action=="upvote"){
-if(!upvoted){
-  if (downvoted) {
-    await comments.updateOne(
-      { _id: commentId },
-      { $inc: { downvote: -1 } ,
-      $pull: {
-        votes: {
-          userId: userId,
-          action: "downvote",
-        },
-      }
-    },
+  if (action == "upvote") {
+    const upvoted = comment.votes.filter(
+      (vote) => vote.userId === userId && vote.action === action
     );
+    const downvoted = comment.votes.filter(
+      (vote) => vote.userId === userId && vote.action === "downvote"
+    );
+
+    console.log(upvoted, "from upvote");
+    console.log(downvoted, "from upvote");
+
+
+
+    if (!upvoted) {
+      if (downvoted) {
+        await comments.updateOne(
+          { _id: commentId },
+          {
+            $inc: { downvote: -1 },
+            $pull: {
+              votes: {
+                userId: userId,
+                action: "downvote",
+              },
+            },
+          }
+        );
+      }
+      await comments.updateOne(
+        { _id: commentId },
+        {
+          $inc: { upvote: 1 },
+          $push: {
+            votes: {
+              userId: userId,
+              action: "upvote",
+            },
+          },
+        }
+      );
+    } else {
+      await comments.updateOne(
+        { _id: commentId },
+        {
+          $inc: { upvote: -1 },
+          $pull: {
+            votes: {
+              userId: userId,
+              action: "upvote",
+            },
+          },
+        }
+      );
+    }
+  } else if (action == "downvote") {
+    const upvoted = comment.votes.filter(
+      (vote) => vote.userId === userId && vote.action === action
+    );
+    const downvoted = comment.votes.filter(
+      (vote) => vote.userId === userId && vote.action === "downvote"
+    );
+    if (!downvoted) {
+      if (upvoted) {
+        await comments.updateOne(
+          { _id: commentId },
+          {
+            $inc: { upvote: -1 },
+            $pull: {
+              votes: {
+                userId: userId,
+                action: "upvote",
+              },
+            },
+          }
+        );
+      }
+      await comments.updateOne(
+        { _id: commentId },
+        {
+          $inc: { upvote: 1 },
+          $push: {
+            votes: {
+              userId: userId,
+              action: "upvote",
+            },
+          },
+        }
+      );
+    } else {
+      await comments.updateOne(
+        { _id: commentId },
+        {
+          $inc: { downvote: -1 },
+          $pull: {
+            votes: {
+              userId: userId,
+              action: "downvote",
+            },
+          },
+        }
+      );
+    }
   }
+  const totalvote = Math.max(comment.upvote - comment.downvote, 0);
   await comments.updateOne(
     { _id: commentId },
-    {
-      $inc: { upvote: 1 },
-      $push: {
-        votes: {
-          userId: userId,
-          action: "upvote",
-        },
-      },
-    }
+    { $set: { totalvote: totalvote } }
   );
-}else{
-  await comments.updateOne({ _id: commentId }, { $inc: { upvote: -1 },  $pull: {
-    votes: {
-      userId: userId,
-      action: "upvote",
-    },
-  }});
-}
-}else if (action == "downvote"){
-  if(!downvoted){
-    if (upvoted) {
-      await comments.updateOne({ _id: commentId }, { $inc: { upvote: -1 } , $pull: {
-        votes: {
-          userId: userId,
-          action: "upvote",
-        },
-      }});
-    }
-    await comments.updateOne(
-      { _id: commentId },
-      {
-        $inc: { upvote: 1 },
-        $push: {
-          votes: {
-            userId: userId,
-            action: "upvote",
-          },
-        },
-      }
-    );
-  }else{
-    await comments.updateOne({ _id: commentId }, { $inc: { downvote: -1 } , $pull: {
-      votes: {
-        userId: userId,
-        action: "downvote",
-      },
-    }});
-  }
-
-
-
-
-}
-const totalvote = Math.max(comment.upvote - comment.downvote , 0);
-await comments.updateOne({ _id: commentId }, { $set: { totalvote:totalvote } });
-res.status(200).json({
-  status: "success",
-  message: "successfully voted",
-});
-
-
+  res.status(200).json({
+    status: "success",
+    message: "successfully voted",
+  });
 };
-
-
-
-
-
 
 module.exports = {
   postComment,
@@ -192,9 +206,3 @@ module.exports = {
   viewReply,
   voteComment,
 };
-
-
-
-
-
-

@@ -23,7 +23,6 @@ Full-stack social networking platform. It encompasses server-side logic and APIs
   - Users can create and join communities.
 ## Tech Stack
 - **Backend:** Node.js, Express, MongoDB
-## Login
-![Screenshot (1)](https://github.com/fathimathjazeera/serverofcommunify/assets/113518710/9938e6b9-c5ce-4459-acb6-ef9dcbb54d53)
+
 
 
